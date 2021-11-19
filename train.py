@@ -10,15 +10,20 @@ import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
 from dataset import DataPrecessForSentence
-from utils import train, validate
-from transformers import BertTokenizer
+from utils import train, validate, eval_object
+from transformers import BertTokenizer, AutoTokenizer
 from model import BertModel
 from transformers.optimization import AdamW
 from config import *
 
 
+Tokenizer = eval_object(model_dict[MODEL][0])
+# print(Tokenizer)
+
 def main():
-    bert_tokenizer = BertTokenizer.from_pretrained(bert_path_or_name)
+    bert_tokenizer = Tokenizer.from_pretrained(bert_path_or_name)
+
+    # bert_tokenizer = AutoTokenizer.from_pretrained(bert_path_or_name)
     device = torch.device("cuda")
     print(20 * "=", " Preparing for training ", 20 * "=")
     # 保存模型的路径

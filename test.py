@@ -4,10 +4,11 @@ Created on Sat Mar 14 13:30:07 2020
 
 @author: zhaog
 """
+import pandas as pd
 import torch
 from sys import platform
 from torch.utils.data import DataLoader
-from transformers import RobertaTokenizer
+from transformers import RobertaTokenizer, BertTokenizer
 from model import BertModelTest
 from utils import test
 from dataset import DataPrecessForSentence
@@ -16,7 +17,7 @@ from config import *
 def main():
 
     device = torch.device("cuda")
-    bert_tokenizer = RobertaTokenizer.from_pretrained('roberta-large', do_lower_case=True)
+    bert_tokenizer = BertTokenizer.from_pretrained(bert_path_or_name)
     print(20 * "=", " Preparing for testing ", 20 * "=")
     print(target_file)
     if platform == "linux" or platform == "linux2":
@@ -27,14 +28,17 @@ def main():
     # Retrieving model parameters from checkpoint.
     print("\t* Loading test data...")    
     test_data = DataPrecessForSentence(bert_tokenizer, test_file)
-    test_loader = DataLoader(test_data, shuffle=True, batch_size=batch_size)
+    test_loader = DataLoader(test_data, shuffle=False, batch_size=batch_size)
     print("\t* Building model...")
     model = BertModelTest().to(device)
     model.load_state_dict(checkpoint["model"])
     print(20 * "=", " Testing roberta model on device: {} ".format(device), 20 * "=")
-    batch_time, total_time, accuracy= test(model, test_loader)
+    batch_time, total_time, accuracy, all_labels, all_pred = test(model, test_loader)
     print("\n-> Average batch processing time: {:.4f}s, total test time: {:.4f}s, accuracy: {:.4f}%\n".format(batch_time, total_time, (accuracy*100)))
-
+    df = pd.read_csv(test_file, engine='python', encoding=csv_encoding, error_bad_lines=False)
+    df['pred'] = all_pred
+    # df['should_label'] = all_labels
+    df.to_csv(test_pred_out, index=False, encoding='utf-8')
 
 if __name__ == "__main__":
     main()

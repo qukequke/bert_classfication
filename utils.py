@@ -4,12 +4,23 @@ Created on Thu Mar 12 02:08:46 2020
 
 @author: zhaog
 """
+from importlib import import_module
+
 import torch
 import torch.nn as nn
 import time
 from tqdm import tqdm
 from sklearn.metrics import roc_auc_score
 
+
+def eval_object(object_):
+    if '.' in object_:
+        module_, class_ = object_.rsplit('.', 1)
+        module_ = import_module(module_)
+        return getattr(module_, class_)
+    else:
+        module_ = import_module(object_)
+        return module_
 
 def generate_sent_masks(enc_hiddens, source_lengths):
     """ Generate sentence masks for encoder hidden states.
@@ -156,6 +167,7 @@ def test(model, dataloader):
     accuracy = 0.0
     all_prob = []
     all_labels = []
+    all_pred = []
     # Deactivate autograd for evaluation.
     with torch.no_grad():
         for tokened_data_dict in dataloader:
@@ -164,15 +176,17 @@ def test(model, dataloader):
             tokened_data_dict = {k: v.to(device) for k, v in tokened_data_dict.items()}
             labels = tokened_data_dict['labels']
             # seqs, masks, labels = batch_seqs.to(device), batch_seq_masks.to(device), batch_labels.to(device)
-            _, _, probabilities = model(**tokened_data_dict)
+            _, _, probabilities = model(**tokened_data_dict)  # [batch_size, n_label]
             accuracy += correct_predictions(probabilities, labels)
             batch_time += time.time() - batch_start
-            all_prob.extend(probabilities[:, 1].cpu().numpy())
-            all_labels.extend(labels)
+            # all_prob.extend(probabilities[:, 1].cpu().numpy())
+            _, out_classes = probabilities.max(dim=1)
+            all_labels.extend(labels.cpu().numpy())
+            all_pred.extend(out_classes.cpu().numpy())
     batch_time /= len(dataloader)
     total_time = time.time() - time_start
     accuracy /= (len(dataloader.dataset))
-    return batch_time, total_time, accuracy
+    return batch_time, total_time, accuracy, all_labels, all_pred
 
 
 def train(model, dataloader, optimizer, epoch_number, max_gradient_norm):
