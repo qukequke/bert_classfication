@@ -3,7 +3,8 @@
 中文文本分类，RoBerta，基于pytorch，开箱即用。
 
 ## 中文数据集
-我从[THUCNews](http://thuctc.thunlp.org/)中抽取了20万条新闻标题，已上传至github，文本长度在20到30之间。一共10个类别，每类2万条。数据以字为单位输入模型。
+目前数据来源于https://github.com/649453932/Bert-Chinese-Text-Classification-Pytorch
+
 
 类别：财经、房产、股票、教育、科技、社会、时政、体育、游戏、娱乐。
 
