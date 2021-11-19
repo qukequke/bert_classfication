@@ -41,13 +41,13 @@ def main():
         if len(para.size()) < 2:
             continue
         if 'classifier' in name:
-            # print(para.shape)
             nn.init.xavier_normal_(para)
         # para.requires_grad = True
-        if 'classifier' in name:  #
-            para.requires_grad = True
-        else:
-            para.requires_grad = False
+        if freeze_bert_head:
+            if 'classifier' in name:
+                para.requires_grad = True
+            else:
+                para.requires_grad = False
         # print(name)
     param_optimizer = list(model.named_parameters())
     param_optimizer = [(i, k) for i, k in param_optimizer if k.requires_grad]
@@ -118,6 +118,7 @@ def main():
             torch.save({"epoch": epoch,
                         "model": model.state_dict(),
                         "best_score": best_score,
+                        # "optimizer": optimizer.state_dict(),
                         "epochs_count": epochs_count,
                         "train_losses": train_losses,
                         "valid_losses": valid_losses},

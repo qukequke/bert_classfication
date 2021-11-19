@@ -11,7 +11,6 @@ class DataPrecessForSentence(Dataset):
     """
     对文本进行处理
     """
-
     def __init__(self, bert_tokenizer, LCQMC_file):
         """
         bert_tokenizer :分词器
@@ -46,9 +45,9 @@ class DataPrecessForSentence(Dataset):
             labels      : 标签取值为{0,1}，其中0表示负样本，1代表正样本。
         """
         if n_nums:
-            df = pd.read_csv(file, engine='python', error_bad_lines=False, nrows=n_nums)
+            df = pd.read_csv(file, engine='python', encoding=csv_encoding, error_bad_lines=False, nrows=n_nums)
         else:
-            df = pd.read_csv(file, engine='python', error_bad_lines=False)
+            df = pd.read_csv(file, engine='python', encoding=csv_encoding, error_bad_lines=False)
         self.length = len(df)
         print(f"数据集个数为{len(df)}")
         if len(csv_rows) == 2:
@@ -71,6 +70,18 @@ class DataPrecessForSentence(Dataset):
         # 返回结果为类字典 {'input_ids':[[1,1,1,], [1,2,1]], 'token_type_ids':矩阵, 'attention_mask':矩阵,...}
         labels = torch.Tensor(labels).type(torch.long)
         data['labels'] = labels
+        print('输入例子')
+        # print(len(seqs))
+        # print(len(attention_mask))
+        # print(len(labels))
+        print(sentences[0])
+        print(f"实际序列转换后的长度为{len(data['labels'])}, 设置最长为{self.length}")
+        print(data['labels'][0])
+        print(data['input_ids'][0])
+        print(data['attention_mask'][0])
+        # print(seqs[0])
+        # print(attention_mask[0])
+        # print(labels[0])
         return data
 
 
