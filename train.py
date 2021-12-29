@@ -8,7 +8,7 @@ import os
 
 import torch
 import torch.nn as nn
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, WeightedRandomSampler
 from dataset import DataPrecessForSentence
 from utils import train, validate, eval_object
 from transformers import BertTokenizer, AutoTokenizer
@@ -33,7 +33,17 @@ def main():
     # -------------------- Data loading ------------------- #
     print("\t* Loading training data...")
     train_data = DataPrecessForSentence(bert_tokenizer, train_file)
-    train_loader = DataLoader(train_data, shuffle=True, batch_size=batch_size)
+    labels = train_data.labels
+    if use_sample:
+        from collections import Counter
+        count_dict = Counter(labels)
+        count_dict = {k: 1 - (v / len(train_data)) for k, v in count_dict.items()}
+        print(count_dict)
+        sampler = WeightedRandomSampler([count_dict[int(i)] for i in labels], batch_size, replacement=True)
+
+        train_loader = DataLoader(train_data, shuffle=False, batch_size=batch_size, sampler=sampler)
+    else:
+        train_loader = DataLoader(train_data, shuffle=True, batch_size=batch_size)
     print("\t* Loading validation data...")
     dev_data = DataPrecessForSentence(bert_tokenizer, dev_file)
     dev_loader = DataLoader(dev_data, shuffle=True, batch_size=batch_size)

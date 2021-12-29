@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-import csv
+# import csv
+import re
+
 from torch.utils.data import Dataset
-from hanziconv import HanziConv
 import pandas as pd
 import torch
 from config import *
@@ -18,10 +19,6 @@ class DataPrecessForSentence(Dataset):
         LCQMC_file     :语料文件
         """
         self.bert_tokenizer = bert_tokenizer
-        # self.max_seq_len = max_char_len
-        # print(f'最大长度为{max_seq_len}')
-        # self.seqs, self.seq_masks, self.seq_segments, self.labels = self.get_input(LCQMC_file)
-        # self.seqs, self.seq_masks, self.labels = self.get_input(LCQMC_file)
         self.data = self.get_input(LCQMC_file)
 
     def __len__(self):
@@ -45,19 +42,29 @@ class DataPrecessForSentence(Dataset):
             seq_segment : shape等于seq，因为是单句，所以取值都为0。
             labels      : 标签取值为{0,1}，其中0表示负样本，1代表正样本。
         """
-        if n_nums:
-            df = pd.read_csv(file, engine='python', encoding=csv_encoding, error_bad_lines=False, nrows=n_nums)
+        mode = 'train'
+        if not file.endswith('csv'):
+            mode = 'test'
+            print('测试模式')
+            df = pd.DataFrame([{'text':file}])
         else:
-            df = pd.read_csv(file, engine='python', encoding=csv_encoding, error_bad_lines=False)
+            if n_nums:
+                df = pd.read_csv(file, engine='python', encoding=csv_encoding, error_bad_lines=False, nrows=n_nums)
+            else:
+                df = pd.read_csv(file, engine='python', encoding=csv_encoding, error_bad_lines=False)
+
+        df[csv_rows[0]] = df[csv_rows[0]].apply(lambda x:re.sub('^\d+(\.\d+)+', '', x))  # 去掉1.1.11之类
+
         self.length = len(df)
         self.bert_tokenizer.model_max_length = max_seq_len
         print(f"数据集个数为{len(df)}")
-        if MODE == 'test':  # 测试模式
-            if len(csv_rows) == 1:
-                sentences = df[csv_rows[0]].tolist()
-                labels = [1 for _ in range(len(sentences))]
-            else:
-                sentences = [df[csv_rows[0]].tolist(), df[csv_rows[1]].tolist()]
+        # if MODE == 'test':  # 测试模式
+        if mode== 'test':  # 测试模式
+            labels = [1 for _ in range(self.length)]
+            # if len(csv_rows) == 1:
+            sentences = df[csv_rows[0]].tolist()
+            # else:
+            #     sentences = [df[csv_rows[0]].tolist(), df[csv_rows[1]].tolist()]
         else:  # 训练模式
             labels = df[csv_rows[-1]].tolist()
             if len(csv_rows) == 2:
@@ -76,10 +83,11 @@ class DataPrecessForSentence(Dataset):
         else:
             data = self.bert_tokenizer(sentences, padding=True, truncation=True, return_tensors='pt')
         # 返回结果为类字典 {'input_ids':[[1,1,1,], [1,2,1]], 'token_type_ids':矩阵, 'attention_mask':矩阵,...}
+        self.labels = labels.copy()
         labels = torch.Tensor(labels).type(torch.long)
         data['labels'] = labels
         print('输入例子')
-        print(sentences[0])
+        print(sentences[0] if isinstance(sentences[0], str) else sentences[0][0])
         for k, v in data.items():
             print(k)
             print(v[0])
@@ -93,14 +101,14 @@ if __name__ == '__main__':
 
     bert_tokenizer = BertTokenizer.from_pretrained(bert_path_or_name)
     dataset = DataPrecessForSentence(bert_tokenizer, train_file)
-    # for i in data:
-    #     print(i)
-    #     break
-    print(len(dataset))
+    for i in dataset:
+        print(i)
+        break
+    # print(len(dataset))
     d = DataLoader(dataset, batch_size=20)
-    print(len(d))
+    # print(len(d))
     for ii, i in enumerate(d):
-        # print(i)
+        print(i)
         print(ii)
         break
 

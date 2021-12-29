@@ -4,6 +4,7 @@ Created on Thu Mar 12 02:08:46 2020
 
 @author: zhaog
 """
+from collections import Counter
 from importlib import import_module
 
 import torch
@@ -11,6 +12,7 @@ import torch.nn as nn
 import time
 from tqdm import tqdm
 from sklearn.metrics import roc_auc_score
+from config import *
 
 
 def eval_object(object_):
@@ -215,25 +217,30 @@ def train(model, dataloader, optimizer, epoch_number, max_gradient_norm):
     correct_preds = 0
     tqdm_batch_iterator = tqdm(dataloader)
     # for batch_index, (batch_seqs, batch_mask, batch_seq_segments, batch_labels) in enumerate(tqdm_batch_iterator):
-    for batch_index, (tokened_data_dict) in enumerate(tqdm_batch_iterator):
-        batch_start = time.time()
-        # Move input and output data to the GPU if it is used.
-        # seqs, batch_att, labels = batch_seqs.to(device), batch_attention.to(device), batch_labels.to(device)
-        tokened_data_dict = {k: v.to(device) for k, v in tokened_data_dict.items()}
-        labels = tokened_data_dict['labels']
-        optimizer.zero_grad()
-        loss, logits, probabilities = model(**tokened_data_dict)
-        # print(logits)
-        # print(loss)
-        loss.backward()
-        nn.utils.clip_grad_norm_(model.parameters(), max_gradient_norm)
-        optimizer.step()
-        batch_time_avg += time.time() - batch_start
-        running_loss += loss.item()
-        correct_preds += correct_predictions(probabilities, labels)
-        description = "Avg. batch proc. time: {:.4f}s, loss: {:.4f}" \
-            .format(batch_time_avg / (batch_index + 1), running_loss / (batch_index + 1))
-        tqdm_batch_iterator.set_description(description)
+    if not use_sample:
+        global validate_iter
+        validate_iter = 1
+    for i in range(validate_iter):
+        print(f'i:{i}')
+        for batch_index, (tokened_data_dict) in enumerate(tqdm_batch_iterator):
+            batch_start = time.time()
+            tokened_data_dict = {k: v.to(device) for k, v in tokened_data_dict.items()}
+            labels = tokened_data_dict['labels']
+            if PRINT_TRAIN_COUNT:
+                print(Counter(list(labels.cpu().numpy())))
+            optimizer.zero_grad()
+            loss, logits, probabilities = model(**tokened_data_dict)
+            # print(logits)
+            # print(loss)
+            loss.backward()
+            nn.utils.clip_grad_norm_(model.parameters(), max_gradient_norm)
+            optimizer.step()
+            batch_time_avg += time.time() - batch_start
+            running_loss += loss.item()
+            correct_preds += correct_predictions(probabilities, labels)
+            description = "Avg. batch proc. time: {:.4f}s, loss: {:.4f}" \
+                .format(batch_time_avg / (batch_index + 1), running_loss / (batch_index + 1))
+            tqdm_batch_iterator.set_description(description)
     epoch_time = time.time() - epoch_start
     epoch_loss = running_loss / len(dataloader)
     epoch_accuracy = correct_preds / len(dataloader.dataset)
