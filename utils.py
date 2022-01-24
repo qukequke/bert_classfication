@@ -24,6 +24,7 @@ def eval_object(object_):
         module_ = import_module(object_)
         return module_
 
+
 def generate_sent_masks(enc_hiddens, source_lengths):
     """ Generate sentence masks for encoder hidden states.
     @param enc_hiddens (Tensor): encodings of shape (b, src_len, h), where b = batch size,
@@ -99,8 +100,13 @@ def correct_predictions(output_probabilities, targets):
     Returns:
         The number of correct predictions in 'output_probabilities'.
     """
-    _, out_classes = output_probabilities.max(dim=1)
-    correct = (out_classes == targets).sum()
+    if problem_type == 'multi_label_classification':
+        preds = nn.functional.sigmoid(output_probabilities)
+        preds2 = torch.where(preds > 0.50001, torch.ones(preds.shape).to('cuda'), torch.zeros(preds.shape).to('cuda'))
+        correct = sum((i == j).all() for i, j in zip(preds2, targets))
+    else:
+        _, out_classes = output_probabilities.max(dim=1)
+        correct = (out_classes == targets).sum()
     return correct.item()
 
 
@@ -182,9 +188,15 @@ def test(model, dataloader):
             accuracy += correct_predictions(probabilities, labels)
             batch_time += time.time() - batch_start
             # all_prob.extend(probabilities[:, 1].cpu().numpy())
-            _, out_classes = probabilities.max(dim=1)
+            if problem_type == 'multi_label_classification':
+                preds = nn.functional.sigmoid(probabilities)
+                out_classes = torch.where(preds > 0.50001, torch.ones(preds.shape).to('cuda'),
+                                     torch.zeros(preds.shape).to('cuda'))
+                # out_classes = out_classes.type(torch.long)
+            else:
+                _, out_classes = probabilities.max(dim=1)
             all_labels.extend(labels.cpu().numpy())
-            all_pred.extend(out_classes.cpu().numpy())
+            all_pred.extend(out_classes.cpu().numpy().astype('int').tolist())
     batch_time /= len(dataloader)
     total_time = time.time() - time_start
     accuracy /= (len(dataloader.dataset))

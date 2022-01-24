@@ -43,23 +43,23 @@ class DataPrecessForSentence(Dataset):
             labels      : 标签取值为{0,1}，其中0表示负样本，1代表正样本。
         """
         mode = 'train'
-        if not file.endswith('csv'):
+        if isinstance(file, list):
             mode = 'test'
             print('测试模式')
-            df = pd.DataFrame([{'text':file}])
+            df = pd.DataFrame([{'text': i} for i in file])
         else:
             if n_nums:
                 df = pd.read_csv(file, engine='python', encoding=csv_encoding, error_bad_lines=False, nrows=n_nums)
             else:
                 df = pd.read_csv(file, engine='python', encoding=csv_encoding, error_bad_lines=False)
 
-        df[csv_rows[0]] = df[csv_rows[0]].apply(lambda x:re.sub('^\d+(\.\d+)+', '', x))  # 去掉1.1.11之类
+        df[csv_rows[0]] = df[csv_rows[0]].apply(lambda x: re.sub('^\d+(\.\d+)+', '', x))  # 去掉1.1.11之类
 
         self.length = len(df)
         self.bert_tokenizer.model_max_length = max_seq_len
         print(f"数据集个数为{len(df)}")
         # if MODE == 'test':  # 测试模式
-        if mode== 'test':  # 测试模式
+        if mode == 'test':  # 测试模式
             labels = [1 for _ in range(self.length)]
             # if len(csv_rows) == 1:
             sentences = df[csv_rows[0]].tolist()
@@ -84,7 +84,13 @@ class DataPrecessForSentence(Dataset):
             data = self.bert_tokenizer(sentences, padding=True, truncation=True, return_tensors='pt')
         # 返回结果为类字典 {'input_ids':[[1,1,1,], [1,2,1]], 'token_type_ids':矩阵, 'attention_mask':矩阵,...}
         self.labels = labels.copy()
-        labels = torch.Tensor(labels).type(torch.long)
+        if problem_type == 'multi_label_classification':
+            # labels = torch.Tensor([i.type(torch.long) for i in labels])
+            # labels = torch.Tensor(labels).type(torch.long)
+            labels = torch.Tensor([eval(i) for i in labels]).type(torch.float)
+        else:
+            labels = torch.Tensor(labels).type(torch.long)
+            # labels = torch.Tensor([eval(i) for i in labels]).type(torch.long)
         data['labels'] = labels
         print('输入例子')
         print(sentences[0] if isinstance(sentences[0], str) else sentences[0][0])

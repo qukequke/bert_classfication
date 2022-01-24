@@ -13,7 +13,7 @@ class BertModel(nn.Module):
     def __init__(self):
         super(BertModel, self).__init__()
         # self.bert = RobertaForSequenceClassification.from_pretrained(bert_path_or_name, num_labels=10)
-        self.bert = ClassifyClass.from_pretrained(bert_path_or_name, num_labels=num_labels)
+        self.bert = ClassifyClass.from_pretrained(bert_path_or_name, num_labels=num_labels, problem_type=problem_type)
         # self.bert = AutoModelForSequenceClassification.from_pretrained(bert_path_or_name, num_labels=10)
         self.device = torch.device("cuda")
 
@@ -30,7 +30,7 @@ class BertModelTest(nn.Module):
     def __init__(self):
         super(BertModelTest, self).__init__()
         # config = RobertaConfig.from_pretrained(bert_path_or_name, num_labels=num_labels)
-        config = ClassifyConfig.from_pretrained(bert_path_or_name, num_labels=num_labels)
+        config = ClassifyConfig.from_pretrained(bert_path_or_name, num_labels=num_labels, problem_type=problem_type)
         # config = AutoConfig.from_pretrained(bert_path_or_name, num_labels=num_labels)
         # self.bert = RobertaForSequenceClassification(config)  # /bert_pretrain/
         self.bert = ClassifyClass(config)  # /bert_pretrain/

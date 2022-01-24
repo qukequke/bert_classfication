@@ -16,8 +16,9 @@ from model import BertModel
 from transformers.optimization import AdamW
 from config import *
 
-
 Tokenizer = eval_object(model_dict[MODEL][0])
+
+
 # print(Tokenizer)
 
 def main():
@@ -101,9 +102,7 @@ def main():
         valid_losses = checkpoint_save["valid_losses"]
     # Compute loss and accuracy before starting (or resuming) training.
     _, valid_loss, valid_accuracy = validate(model, dev_loader)
-    print("\t* Validation loss before training: {:.4f}, accuracy: {:.4f}%".format(valid_loss,
-                                                                                  (valid_accuracy * 100),
-                                                                                  ))
+    print("\t* Validation loss before training: {:.4f}, accuracy: {:.4f}%".format(valid_loss, (valid_accuracy * 100), ))
     # -------------------- Training epochs ------------------- #
     print("\n", 20 * "=", "Training roberta model on device: {}".format(device), 20 * "=")
     patience_counter = 0

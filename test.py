@@ -37,7 +37,11 @@ def main():
     print("\n-> Average batch processing time: {:.4f}s, total test time: {:.4f}s, accuracy: {:.4f}%\n".format(batch_time, total_time, (accuracy*100)))
     df = pd.read_csv(test_file, engine='python', encoding=csv_encoding, error_bad_lines=False)
     df['pred'] = all_pred
-    # df['should_label'] = all_labels
+    if problem_type=='multi_label_classification':
+        df['ret'] = df['pred'] == (df['label'].apply(lambda x:eval(x)))
+    else:
+        df['ret'] = df['pred'] == df['label']
+    print(df['ret'].value_counts())
     df.to_csv(test_pred_out, index=False, encoding='utf-8')
 
 if __name__ == "__main__":
