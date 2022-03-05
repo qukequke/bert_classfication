@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 import torch
 from torch import nn
-from transformers import BertForSequenceClassification, BertConfig, RobertaForSequenceClassification, RobertaConfig, AutoModelForSequenceClassification, AutoConfig
+# from transformers import BertForSequenceClassification, BertConfig, RobertaForSequenceClassification, RobertaConfig, AutoModelForSequenceClassification, AutoConfig
 from config import *
 from utils import eval_object
 
 
 ClassifyClass = eval_object(model_dict[MODEL][1])
 ClassifyConfig = eval_object(model_dict[MODEL][2])
+bert_path_or_name = model_dict[MODEL][-1]
 
 class BertModel(nn.Module):
     def __init__(self):

@@ -19,17 +19,17 @@ from torch.utils.data import Dataset
 import pandas as pd
 import torch
 
-# dir_name = 'yewuliucheng'
-dir_name = 'gangwei'
+dir_name = 'xinwen'
 target_file = f'models/{dir_name}/best.pth.tar'  # 模型存储路径
+label_file = f'data/{dir_name}/label.txt'
 bert_path_or_name = 'bert-base-chinese'  # 使用模型
 batch_size = 32
 csv_rows = ['text', 'label']
 max_seq_len = 103
 # num_labels = 10
-num_labels = 7
-problem_type = 'multi_label_classification'
-# problem_type = 'single_label_classification'  # 单分类
+num_labels = 10
+# problem_type = 'multi_label_classification'
+problem_type = 'single_label_classification'  # 单分类
 
 
 class BertModelTest(nn.Module):
@@ -176,6 +176,9 @@ class DataPrecessForSentence(Dataset):
 
 class Inferenve:
     def __init__(self):
+        with open(label_file, 'r', encoding='utf-8') as f:
+            labels = f.readlines()
+        self.id2label_dict = {i: label.strip() for i, label in enumerate(labels)}
         self.device = torch.device("cuda")
         self.bert_tokenizer = BertTokenizer.from_pretrained(bert_path_or_name)
         print(20 * "=", " Preparing for testing ", 20 * "=")
@@ -189,25 +192,22 @@ class Inferenve:
         self.model.load_state_dict(checkpoint["model"])
 
     def get_ret(self, sentences):
-        print("\t* Loading test data...")
         if isinstance(sentences, str):
             sentences = list(sentences)
         test_data = DataPrecessForSentence(self.bert_tokenizer, sentences)
         test_loader = DataLoader(test_data, shuffle=False, batch_size=batch_size)
-        print("\t* Building model...")
-        print(20 * "=", " Testing roberta model on device: {} ".format(self.device), 20 * "=")
         batch_time, total_time, accuracy, all_labels, all_pred = a_test(self.model, test_loader)
-        return all_pred
+        d = all_pred[0]
+        if problem_type == 'multi_label_classification':
+            ret = [self.id2label_dict[i] for i in range(len(d)) if d[i]]
+        else:
+            ret = self.id2label_dict[d]
+        return ret
+
 
 if __name__ == "__main__":
-    with open(f'data/{dir_name}/label.txt', 'r', encoding='utf-8') as f:
-        labels = f.readlines()
-    id2label_dict = {i: label.strip() for i, label in enumerate(labels)}
     infer = Inferenve()
     while True:
         data = input("请输入要预测的句子\n")
-        a = infer.get_ret([data, ])[0]
-        if problem_type == 'multi_label_classification':
-            print([id2label_dict[i] for i in a if i])
-        else:
-            print(id2label_dict[a])
+        a = infer.get_ret([data, ])
+        print(a)

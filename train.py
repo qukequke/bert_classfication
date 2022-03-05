@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Wed Mar 18 23:55:43 2020
-
-@author: zhaog
-"""
 import os
 
 import torch
@@ -11,12 +6,13 @@ import torch.nn as nn
 from torch.utils.data import DataLoader, WeightedRandomSampler
 from dataset import DataPrecessForSentence
 from utils import train, validate, eval_object
-from transformers import BertTokenizer, AutoTokenizer
+# from transformers import BertTokenizer, AutoTokenizer
 from model import BertModel
 from transformers.optimization import AdamW
 from config import *
 
 Tokenizer = eval_object(model_dict[MODEL][0])
+bert_path_or_name = model_dict[MODEL][-1]
 
 
 # print(Tokenizer)

@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 # import csv
+from collections import Counter
+
 import re
 
 from torch.utils.data import Dataset
@@ -89,6 +91,8 @@ class DataPrecessForSentence(Dataset):
             # labels = torch.Tensor(labels).type(torch.long)
             labels = torch.Tensor([eval(i) for i in labels]).type(torch.float)
         else:
+            print('各个分类标签个数')
+            print(Counter(labels))
             labels = torch.Tensor(labels).type(torch.long)
             # labels = torch.Tensor([eval(i) for i in labels]).type(torch.long)
         data['labels'] = labels

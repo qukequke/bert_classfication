@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Sat Mar 14 13:30:07 2020
-
-@author: zhaog
-"""
 import pandas as pd
 import torch
 from sys import platform
@@ -13,6 +8,7 @@ from model import BertModelTest
 from utils import test
 from dataset import DataPrecessForSentence
 from config import *
+bert_path_or_name = model_dict[MODEL][-1]
 
 def main():
 
@@ -32,15 +28,15 @@ def main():
     print("\t* Building model...")
     model = BertModelTest().to(device)
     model.load_state_dict(checkpoint["model"])
-    print(20 * "=", " Testing roberta model on device: {} ".format(device), 20 * "=")
+    print(20 * "=", " Testing model on device: {} ".format(device), 20 * "=")
     batch_time, total_time, accuracy, all_labels, all_pred = test(model, test_loader)
     print("\n-> Average batch processing time: {:.4f}s, total test time: {:.4f}s, accuracy: {:.4f}%\n".format(batch_time, total_time, (accuracy*100)))
     df = pd.read_csv(test_file, engine='python', encoding=csv_encoding, error_bad_lines=False)
-    df['pred'] = all_pred
+    df['pred'] = [i.cpu().numpy() for i in all_pred]
     if problem_type=='multi_label_classification':
-        df['ret'] = df['pred'] == (df['label'].apply(lambda x:eval(x)))
+        df['ret'] = df['pred'] == (df[csv_rows[-1]].apply(lambda x:eval(x)))
     else:
-        df['ret'] = df['pred'] == df['label']
+        df['ret'] = df['pred'] == df[csv_rows[-1]]
     print(df['ret'].value_counts())
     df.to_csv(test_pred_out, index=False, encoding='utf-8')
 
