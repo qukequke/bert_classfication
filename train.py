@@ -3,9 +3,10 @@ import os
 
 import torch
 import torch.nn as nn
+from matplotlib import pyplot as plt
 from torch.utils.data import DataLoader, WeightedRandomSampler
 from dataset import DataPrecessForSentence
-from utils import train, validate, eval_object
+from utils import train, validate, eval_object, my_plot
 # from transformers import BertTokenizer, AutoTokenizer
 from model import BertModel
 from transformers.optimization import AdamW
@@ -84,6 +85,7 @@ def main():
     epochs_count = []
     train_losses = []
     valid_losses = []
+    train_acc_list, dev_acc_list, losses = [], [], []
     # Continuing training from a checkpoint if one was given as argument
     if checkpoint:
         checkpoint_save = torch.load(checkpoint)
@@ -100,16 +102,16 @@ def main():
     _, valid_loss, valid_accuracy = validate(model, dev_loader)
     print("\t* Validation loss before training: {:.4f}, accuracy: {:.4f}%".format(valid_loss, (valid_accuracy * 100), ))
     # -------------------- Training epochs ------------------- #
-    print("\n", 20 * "=", "Training roberta model on device: {}".format(device), 20 * "=")
+    print("\n", 20 * "=", "Training model on device: {}".format(device), 20 * "=")
     patience_counter = 0
     for epoch in range(start_epoch, epochs + 1):
         epochs_count.append(epoch)
         print("* Training epoch {}:".format(epoch))
         # print(model)
-        epoch_time, epoch_loss, epoch_accuracy = train(model, train_loader, optimizer, epoch, max_grad_norm)
+        epoch_time, epoch_loss, train_epoch_accuracy = train(model, train_loader, optimizer, epoch, max_grad_norm)
         train_losses.append(epoch_loss)
         print("-> Training time: {:.4f}s, loss = {:.4f}, accuracy: {:.4f}%"
-              .format(epoch_time, epoch_loss, (epoch_accuracy * 100)))
+              .format(epoch_time, epoch_loss, (train_epoch_accuracy * 100)))
         print("* Validation for epoch {}:".format(epoch))
         # epoch_time, epoch_loss, epoch_accuracy, epoch_auc = validate(model, dev_loader)
         epoch_time, epoch_loss, epoch_accuracy = validate(model, dev_loader)
@@ -133,6 +135,12 @@ def main():
                         "train_losses": train_losses,
                         "valid_losses": valid_losses},
                        os.path.join(target_dir, "best.pth.tar"))
+
+        train_acc_list.append(train_epoch_accuracy)
+        dev_acc_list.append(epoch_accuracy)
+        losses.append(epoch_loss)
+        my_plot(train_acc_list, dev_acc_list,losses)  # 画图
+
         if patience_counter >= patience:
             print("-> Early stopping: patience limit reached, stopping...")
             break

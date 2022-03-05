@@ -4,6 +4,7 @@ Created on Thu Mar 12 02:08:46 2020
 
 @author: zhaog
 """
+import os
 from collections import Counter
 from importlib import import_module
 
@@ -11,6 +12,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 import time
+from matplotlib import pyplot as plt
 from tqdm import tqdm
 from sklearn.metrics import roc_auc_score
 from config import *
@@ -260,3 +262,25 @@ def train(model, dataloader, optimizer, epoch_number, max_gradient_norm):
     epoch_loss = running_loss / len(dataloader)
     epoch_accuracy = correct_preds / len(dataloader.dataset)
     return epoch_time, epoch_loss, epoch_accuracy
+
+def get_max(x, y):
+    max_x_index = np.argmax(y)
+    max_x = x[max_x_index]
+    max_y = y[max_x_index]
+    return max_x, max_y
+
+def my_plot(train_acc_list, dev_acc_list, losses):
+    plt.figure()
+    plt.plot(train_acc_list, color='r', label='train_acc')
+    plt.plot(dev_acc_list, color='b', label='dev_acc')
+    x = [i for i in range(len(train_acc_list))]
+    for list_ in [train_acc_list, dev_acc_list]:
+        max_x, max_y = get_max(x, list_)
+        plt.text(max_x, max_y, f'{(max_x, max_y)}')
+        plt.vlines(max_x, 0, max_y, colors='r', linestyles='dashed')
+        plt.hlines(max_y, 0, max_x, colors='b', linestyles='dashed')
+    plt.legend()
+    plt.savefig(os.path.join(os.path.dirname(train_file), 'acc.png'))
+    plt.figure()
+    plt.plot(losses)
+    plt.savefig(os.path.join(os.path.dirname(train_file), 'loss.png'))

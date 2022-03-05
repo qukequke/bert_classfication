@@ -21,7 +21,7 @@ model_dict = {  # 这里可以添加更多模型
     ),
     # 'bert_token_classify': ('transformers.BertTokenizer', 'transformers.BertForTokenClassification', 'transformers.BertConfig'),
 }
-epochs = 60
+epochs = 20
 batch_size = 32
 # batch_size = 64
 lr = 1e-5  # 学习率
@@ -37,7 +37,8 @@ target_file = f'models/{dir_name}/best.pth.tar'  # 模型存储路径
 # checkpoint = f'models/{dir_name}/best.pth.tar'   # 设置模型路径  会继续训练
 checkpoint = None  # 设置模型路径设置成target_file可以继续训练, None则重新训练
 max_seq_len = 103  # 序列最长长度
-n_nums = None  # 读取csv行数，因为有时候测试需要先少读点 None表示读取所有
+n_nums = None # 读取csv行数，因为有时候测试需要先少读点 None表示读取所有
+# n_nums = 1000 # 读取csv行数，因为有时候测试需要先少读点 None表示读取所有
 freeze_bert_head = False  # freeze bert提取特征部分的权重
 
 test_pred_out = f"data/{dir_name}/test_data_predict.csv"
@@ -45,15 +46,12 @@ test_pred_out = f"data/{dir_name}/test_data_predict.csv"
 # 切换任务时 数据配置
 num_labels = 10  # 文本分类个数，应该等于class行数
 csv_rows = ['text', 'class']  # csv的行标题，文本 和 类（目前类必须是数字）
-input_mode = 'add'  # 两句话加一起
+input_mode = 'add'  # 两句话加一起, 对应两句话做输入时的参数,单据输入不用管
 # input_mode = 'split'  # 两句话分开输入
 
 train_file = f"data/{dir_name}/train.csv"
 dev_file = f"data/{dir_name}/dev.csv"
 test_file = f"data/{dir_name}/test.csv"
-# train_file = "data/blood_train.csv"
-# dev_file = "data/blood_train.csv"
-# test_file = "data/blood_train.csv"
 csv_encoding = 'utf-8'
 # csv_encoding = 'gbk'
 
@@ -64,6 +62,7 @@ MODEL = 'bert'
 # bert_path_or_name = 'bert-base-chinese'  # 使用模型
 # bert_path_or_name = 'hfl/chinese-roberta-wwm-ext'  # 使用模型
 
+# 下面为文本不均衡过采样参数，待优化
 use_sample = False
 validate_iter = 20  # 过采样情况下 手动设置迭代次数
 PRINT_TRAIN_COUNT = False  # 是否打印训练集各类个数，样本不均衡时调试用

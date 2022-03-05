@@ -17,7 +17,7 @@
 # 目录结构
 ```
 bert_classification_raw/
-├── data #放数据
+├── data # 放数据
 │   ├── xinwen #放数据
 │   │    ├── class.txt # 行号代表标签类别
 │   │    ├── train.csv  # 测试数据
@@ -41,9 +41,9 @@ bert_classification_raw/
 ## 具体参数可看config.py
 ```
 # 训练
-python train.py 
+python train.py  # 会生成data/xinwen/acc.png,data/xinwen/loss.png,正确率和loss曲线
 # 终端直接输入文本测试
-python infer.py
+python infer.py # 里面参数需要重新配置，不导入config
 # test.csv测试
-python test.py
+python test.py  # 会生成data/xinwen/test_pred_out
 ```
