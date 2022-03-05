@@ -19,6 +19,9 @@
 bert_classification_raw/
 ├── data # 放数据
 │   ├── xinwen #放数据
+│   │    ├── acc.png # 训练时产生, 训练集、验证集正确率曲线
+│   │    ├── loss.png # 训练时产生, loss下降曲线
+│   │    ├── test_data_predict.csv # 行test.py得到的对test.csv的预测结果
 │   │    ├── class.txt # 行号代表标签类别
 │   │    ├── train.csv  # 测试数据
 │   │    ├── train.csv  # 测试数据
@@ -33,12 +36,16 @@ bert_classification_raw/
 └── utils.py  # 小的工具函数
 ```
 
-### 更换自己的数据集
+# 更换自己的数据集
  1、在data下建立和xinwen一样的文件夹（包含train.csv,test.csv,dev.csv）
+
  2、在config.py中修改dir_name
 
+# bert 训练曲线(10epoch)
+![image](data/xinwen/acc.png)
+![image](data/xinwen/loss.png)
 
-## 具体参数可看config.py
+# 具体参数可看config.py
 ```
 # 训练
 python train.py  # 会生成data/xinwen/acc.png,data/xinwen/loss.png,正确率和loss曲线
@@ -47,3 +54,6 @@ python infer.py # 里面参数需要重新配置，不导入config
 # test.csv测试
 python test.py  # 会生成data/xinwen/test_pred_out
 ```
+
+# 参考链接
+https://github.com/649453932/Bert-Chinese-Text-Classification-Pytorch

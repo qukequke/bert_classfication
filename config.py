@@ -21,7 +21,7 @@ model_dict = {  # 这里可以添加更多模型
     ),
     # 'bert_token_classify': ('transformers.BertTokenizer', 'transformers.BertForTokenClassification', 'transformers.BertConfig'),
 }
-epochs = 20
+epochs = 10
 batch_size = 32
 # batch_size = 64
 lr = 1e-5  # 学习率

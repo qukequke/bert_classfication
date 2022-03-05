@@ -85,7 +85,7 @@ def main():
     epochs_count = []
     train_losses = []
     valid_losses = []
-    train_acc_list, dev_acc_list, losses = [], [], []
+    train_acc_list, dev_acc_list = [], []
     # Continuing training from a checkpoint if one was given as argument
     if checkpoint:
         checkpoint_save = torch.load(checkpoint)
@@ -138,8 +138,7 @@ def main():
 
         train_acc_list.append(train_epoch_accuracy)
         dev_acc_list.append(epoch_accuracy)
-        losses.append(epoch_loss)
-        my_plot(train_acc_list, dev_acc_list,losses)  # 画图
+        my_plot(train_acc_list, dev_acc_list,train_losses)  # 画图
 
         if patience_counter >= patience:
             print("-> Early stopping: patience limit reached, stopping...")

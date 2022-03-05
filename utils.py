@@ -274,11 +274,11 @@ def my_plot(train_acc_list, dev_acc_list, losses):
     plt.plot(train_acc_list, color='r', label='train_acc')
     plt.plot(dev_acc_list, color='b', label='dev_acc')
     x = [i for i in range(len(train_acc_list))]
-    for list_ in [train_acc_list, dev_acc_list]:
+    for add, list_ in enumerate([train_acc_list, dev_acc_list]):
         max_x, max_y = get_max(x, list_)
         plt.text(max_x, max_y, f'{(max_x, max_y)}')
-        plt.vlines(max_x, 0, max_y, colors='r', linestyles='dashed')
-        plt.hlines(max_y, 0, max_x, colors='b', linestyles='dashed')
+        plt.vlines(max_x, min(min(train_acc_list), min(dev_acc_list)), max_y, colors='r' if add==0 else 'b', linestyles='dashed')
+        plt.hlines(max_y, 0, max_x, colors='r' if add==0 else 'b', linestyles='dashed')
     plt.legend()
     plt.savefig(os.path.join(os.path.dirname(train_file), 'acc.png'))
     plt.figure()
