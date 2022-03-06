@@ -10,16 +10,29 @@
 import json
 
 model_dict = {  # 这里可以添加更多模型
-    'bert': ('transformers.BertTokenizer',
-             'transformers.BertForSequenceClassification',
-             'transformers.BertConfig',
-             'bert-base-chinese',  # 使用模型参数
-             ),
+    'bert': (
+        'transformers.BertTokenizer',
+        'transformers.BertForSequenceClassification',
+        'transformers.BertConfig',
+        'bert-base-chinese',  # 使用模型参数
+    ),
     'roberta': (
         'transformers.BertTokenizer',
         'transformers.RobertaForSequenceClassification',
         'transformers.RobertaConfig',
         'hfl/chinese-roberta-wwm-ext'
+    ),
+    'ernie': (
+        'transformers.AutoTokenizer',
+        'transformers.BertForSequenceClassification',
+        'transformers.AutoConfig',
+        "nghuyong/ernie-1.0",  # 使用模型参数
+    ),
+    'albert': (
+        'transformers.AutoTokenizer',
+        'transformers.AlbertForSequenceClassification',
+        'transformers.AutoConfig',
+        "voidful/albert_chinese_tiny",  # 使用模型参数
     ),
     # 'bert_token_classify': ('transformers.BertTokenizer', 'transformers.BertForTokenClassification', 'transformers.BertConfig'),
 }
@@ -39,7 +52,7 @@ target_file = f'models/{dir_name}/best.pth.tar'  # 模型存储路径
 # checkpoint = f'models/{dir_name}/best.pth.tar'   # 设置模型路径  会继续训练
 checkpoint = None  # 设置模型路径设置成target_file可以继续训练, None则重新训练
 max_seq_len = 103  # 序列最长长度
-n_nums = None # 读取csv行数，因为有时候测试需要先少读点 None表示读取所有
+n_nums = None  # 读取csv行数，因为有时候测试需要先少读点 None表示读取所有
 # n_nums = 1000 # 读取csv行数，因为有时候测试需要先少读点 None表示读取所有
 freeze_bert_head = False  # freeze bert提取特征部分的权重
 
@@ -54,14 +67,14 @@ input_mode = 'add'  # 两句话加一起, 对应两句话做输入时的参数,�
 train_file = f"data/{dir_name}/train.csv"
 dev_file = f"data/{dir_name}/dev.csv"
 test_file = f"data/{dir_name}/test.csv"
-json_dict= f"data/{dir_name}/class.txt"
+json_dict = f"data/{dir_name}/class.txt"
 csv_encoding = 'utf-8'
 # csv_encoding = 'gbk'
 
 # 训练还是测试任务
 MODE = 'train'
-# MODEL = 'roberta'
-MODEL = 'bert'
+MODEL = 'roberta'
+# MODEL = 'bert'
 # bert_path_or_name = 'bert-base-chinese'  # 使用模型
 # bert_path_or_name = 'hfl/chinese-roberta-wwm-ext'  # 使用模型
 
@@ -71,6 +84,6 @@ validate_iter = 20  # 过采样情况下 手动设置迭代次数
 PRINT_TRAIN_COUNT = False  # 是否打印训练集各类个数，样本不均衡时调试用
 
 with open(json_dict, 'r', encoding='utf-8') as f:
-    dict_ = json.load(f)
-num_labels = len(dict_)
+    classes = f.readlines()
+num_labels = len(classes)
 print(f"num_labels 是{num_labels}")

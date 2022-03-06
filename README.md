@@ -42,8 +42,11 @@ bert_classification_raw/
  2、在config.py中修改dir_name
 
 # bert 训练曲线(10epoch)
-![image](data/xinwen/acc.png)
-![image](data/xinwen/loss.png)
+
+<img src="data/xinwen/bert_acc.png" width="200" height="200" alt="抖音小程序"/>
+
+![image](data/xinwen/bert_acc.png)
+![image](data/xinwen/bert_loss.png)
 
 # 具体参数可看config.py
 ```
