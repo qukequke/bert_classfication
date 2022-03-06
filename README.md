@@ -23,7 +23,7 @@ bert_classification_raw/
 │   │    ├── loss.png # 训练时产生, loss下降曲线
 │   │    ├── test_data_predict.csv # 行test.py得到的对test.csv的预测结果
 │   │    ├── class.txt # 行号代表标签类别
-│   │    ├── train.csv  # 测试数据
+│   │    ├── train.csv  # 训练数据
 │   │    ├── train.csv  # 测试数据
 │   │    └── dev.csv  # 验证数据
 │   └─ models  # 训练中会产生模型存放在这里

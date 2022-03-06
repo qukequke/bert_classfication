@@ -7,6 +7,8 @@
 @Description:
 ---------------------------------------
 '''
+import json
+
 model_dict = {  # 这里可以添加更多模型
     'bert': ('transformers.BertTokenizer',
              'transformers.BertForSequenceClassification',
@@ -44,7 +46,7 @@ freeze_bert_head = False  # freeze bert提取特征部分的权重
 test_pred_out = f"data/{dir_name}/test_data_predict.csv"
 
 # 切换任务时 数据配置
-num_labels = 10  # 文本分类个数，应该等于class行数
+# num_labels = 10  # 文本分类个数，应该等于class行数
 csv_rows = ['text', 'class']  # csv的行标题，文本 和 类（目前类必须是数字）
 input_mode = 'add'  # 两句话加一起, 对应两句话做输入时的参数,单据输入不用管
 # input_mode = 'split'  # 两句话分开输入
@@ -52,6 +54,7 @@ input_mode = 'add'  # 两句话加一起, 对应两句话做输入时的参数,�
 train_file = f"data/{dir_name}/train.csv"
 dev_file = f"data/{dir_name}/dev.csv"
 test_file = f"data/{dir_name}/test.csv"
+json_dict= f"data/{dir_name}/class.txt"
 csv_encoding = 'utf-8'
 # csv_encoding = 'gbk'
 
@@ -66,3 +69,8 @@ MODEL = 'bert'
 use_sample = False
 validate_iter = 20  # 过采样情况下 手动设置迭代次数
 PRINT_TRAIN_COUNT = False  # 是否打印训练集各类个数，样本不均衡时调试用
+
+with open(json_dict, 'r', encoding='utf-8') as f:
+    dict_ = json.load(f)
+num_labels = len(dict_)
+print(f"num_labels 是{num_labels}")

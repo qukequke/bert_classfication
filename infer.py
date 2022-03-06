@@ -21,7 +21,7 @@ import torch
 
 dir_name = 'xinwen'
 target_file = f'models/{dir_name}/best.pth.tar'  # 模型存储路径
-label_file = f'data/{dir_name}/label.txt'
+label_file = f'data/{dir_name}/class.txt'
 bert_path_or_name = 'bert-base-chinese'  # 使用模型
 batch_size = 32
 csv_rows = ['text', 'label']
