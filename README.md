@@ -43,9 +43,9 @@ bert_classification_raw/
 
 # bert 训练曲线(10epoch)
 
-acc             |  loss
-:-------------------------:|:-------------------------:
-![](data/xinwen/bert_acc.png)  |  ![](data/xinwen/bert_loss.png)
+model   |  acc             |  loss
+:-------------------------:|:-------------------------:|:-------------------------:
+bert | ![](data/xinwen/bert_acc.png)  |  ![](data/xinwen/bert_loss.png)
 
 # 具体参数可看config.py
 ```
