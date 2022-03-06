@@ -19,8 +19,8 @@
 bert_classification_raw/
 ├── data # 放数据
 │   ├── xinwen #放数据
-│   │    ├── acc.png # 训练时产生, 训练集、验证集正确率曲线
-│   │    ├── loss.png # 训练时产生, loss下降曲线
+│   │    ├── {model}_acc.png # 训练时产生, 训练集、验证集正确率曲线
+│   │    ├── {model}_loss.png # 训练时产生, loss下降曲线
 │   │    ├── test_data_predict.csv # 行test.py得到的对test.csv的预测结果
 │   │    ├── class.txt # 行号代表标签类别
 │   │    ├── train.csv  # 训练数据
@@ -41,11 +41,14 @@ bert_classification_raw/
 
  2、在config.py中修改dir_name
 
-# bert 训练曲线(10epoch)
+# 训练曲线(10epoch)
 
 model   |  acc             |  loss
 :-------------------------:|:-------------------------:|:-------------------------:
 bert | ![](data/xinwen/bert_acc.png)  |  ![](data/xinwen/bert_loss.png)
+roberta | ![](data/xinwen/roberta_acc.png)  |  ![](data/xinwen/roberta_loss.png)
+ernie  | ![](data/xinwen/ernie_acc.png)  |  ![](data/xinwen/ernie_loss.png)
+albert  | ![](data/xinwen/albert_acc.png)  |  ![](data/xinwen/albert_loss.png)
 
 # 具体参数可看config.py
 ```
