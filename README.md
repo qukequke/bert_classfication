@@ -43,8 +43,9 @@ bert_classification_raw/
 
 # bert 训练曲线(10epoch)
 
-<img src="data/xinwen/bert_acc.png" width="340" alt="抖音小程序"/>
-<img src="data/xinwen/bert_loss.png" width="340" alt="抖音小程序"/>
+acc             |  loss
+:-------------------------:|:-------------------------:
+![](data/xinwen/bert_acc.png)  |  ![](data/xinwen/bert_loss.png)
 
 # 具体参数可看config.py
 ```
