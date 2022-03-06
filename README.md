@@ -43,7 +43,7 @@ bert_classification_raw/
 
 # bert 训练曲线(10epoch)
 
-<img src="data/xinwen/bert_acc.png" width="400" height="400" alt="抖音小程序"/>
+<img src="data/xinwen/bert_acc.png" width="400" alt="抖音小程序"/>
 
 ![image](data/xinwen/bert_acc.png)
 ![image](data/xinwen/bert_loss.png)
