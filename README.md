@@ -1,4 +1,4 @@
-中文文本分类，Bert, RoBerta，基于pytorch，开箱即用。
+中文文本分类，Bert, RoBerta，ernie，albert 基于pytorch，开箱即用。
 
 ## 中文数据集
 目前数据来源于https://github.com/649453932/Bert-Chinese-Text-Classification-Pytorch

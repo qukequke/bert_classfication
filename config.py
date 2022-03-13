@@ -37,8 +37,8 @@ model_dict = {  # 这里可以添加更多模型
     # 'bert_token_classify': ('transformers.BertTokenizer', 'transformers.BertForTokenClassification', 'transformers.BertConfig'),
 }
 # MODEL = 'roberta'
-# MODEL = 'ernie'
-MODEL = 'albert'
+MODEL = 'ernie'
+# MODEL = 'albert'
 # MODEL = 'bert'
 
 epochs = 10
