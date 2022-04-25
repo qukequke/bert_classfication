@@ -1,4 +1,4 @@
-中文文本分类，Bert, RoBerta，ernie，albert 基于pytorch，开箱即用。
+中文文本分类，Bert, RoBerta，ernie，albert,reformer 基于pytorch，开箱即用。
 
 ## 中文数据集
 目前数据来源于https://github.com/649453932/Bert-Chinese-Text-Classification-Pytorch
@@ -49,6 +49,7 @@ bert | ![](data/xinwen/bert_acc.png)  |  ![](data/xinwen/bert_loss.png)
 roberta | ![](data/xinwen/roberta_acc.png)  |  ![](data/xinwen/roberta_loss.png)
 ernie  | ![](data/xinwen/ernie_acc.png)  |  ![](data/xinwen/ernie_loss.png)
 albert  | ![](data/xinwen/albert_acc.png)  |  ![](data/xinwen/albert_loss.png)
+reformer | ![](data/xinwen/reformer_acc.png)  |  ![](data/xinwen/reformer_loss.png)
 
 # 具体参数可看config.py
 ```
