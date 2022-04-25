@@ -22,14 +22,15 @@ import torch
 # dir_name = 'jigouduixiang'
 dir_name = 'xinwen'
 model= 'bert'
+# model= 'bert'
 target_file = f'models/{dir_name}/{model}_best.pth.tar'  # 模型存储路径
 label_file = f'data/{dir_name}/class.txt'
 bert_path_or_name = 'bert-base-chinese'  # 使用模型
 batch_size = 32
 csv_rows = ['text', 'label']
 max_seq_len = 103
-# num_labels = 10
-num_labels = 8
+num_labels = 10
+# num_labels = 8
 # problem_type = 'multi_label_classification'
 problem_type = 'single_label_classification'  # 单分类
 
@@ -195,7 +196,7 @@ class Inferenve:
 
     def get_ret(self, sentences):
         if isinstance(sentences, str):
-            sentences = list(sentences)
+            sentences = [sentences, ]
         test_data = DataPrecessForSentence(self.bert_tokenizer, sentences)
         test_loader = DataLoader(test_data, shuffle=False, batch_size=batch_size)
         batch_time, total_time, accuracy, all_labels, all_pred = a_test(self.model, test_loader)

@@ -22,14 +22,15 @@ bert_classification_raw/
 │   │    ├── {model}_acc.png # 训练时产生, 训练集、验证集正确率曲线
 │   │    ├── {model}_loss.png # 训练时产生, loss下降曲线
 │   │    ├── test_data_predict.csv # 行test.py得到的对test.csv的预测结果
+│   │    ├── api.py  # 通过flask开启http服务, 5000端口 swagger页面, 需使用infer.py
 │   │    ├── class.txt # 行号代表标签类别
 │   │    ├── train.csv  # 训练数据
-│   │    ├── train.csv  # 测试数据
+│   │    ├── test.csv  # 测试数据
 │   │    └── dev.csv  # 验证数据
 │   └─ models  # 训练中会产生模型存放在这里
 ├── config.py  # 配置文件
 ├── dataset.py # pytorch 文本数据整理成bert输入dataloader 
-├── infer.py # 训练完成后,运行这个可以终端输入文本，输出结果 直接测试,并且这个文件不依赖其他文件，如果只用在预测，可以拷走这个文件和模型文件在里面配一下模型文件地址即可
+├── infer.py # 训练完成后,运行这个可以终端输入文本，输出结果 直接测试,并且这个文件不依赖其他文件，如果只用在预测，可以拷走这个文件和模型文件在里面配一下模型文件地址即可,目前配置是bert的
 ├── model.py # 放写模型的代码
 ├── test.py # 对test.csv文件的整体测试结果,增加一列预测结果，保存到csv文件，文件位置在config.py中配置
 ├── train.py # 训练

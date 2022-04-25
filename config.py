@@ -47,8 +47,8 @@ model_dict = {  # 这里可以添加更多模型
 # MODEL = 'roberta'
 # MODEL = 'ernie'
 # MODEL = 'albert'
-# MODEL = 'bert'
-MODEL = 'reformer'
+MODEL = 'bert'
+# MODEL = 'reformer'
 
 epochs = 100
 batch_size = 32
