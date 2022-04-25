@@ -37,7 +37,7 @@ bert_classification_raw/
 ```
 
 # 更换自己的数据集
- 1、在data下建立和xinwen一样的文件夹（包含train.csv,test.csv,dev.csv）
+ 1、在data下建立和xinwen一样的文件夹（包含train.csv,test.csv,dev.csv,class.txt）
 
  2、在config.py中修改dir_name
 

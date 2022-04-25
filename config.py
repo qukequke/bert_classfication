@@ -34,23 +34,30 @@ model_dict = {  # 这里可以添加更多模型
         'transformers.AutoConfig',
         "voidful/albert_chinese_tiny",  # 使用模型参数
     ),
+    'reformer': (
+        'transformers.RoFormerTokenizer',
+        'transformers.RoFormerForSequenceClassification',
+        'transformers.RoFormerConfig',
+        "junnyu/roformer_chinese_base",  # 使用模型参数
+    )
+
     # 'bert_token_classify': ('transformers.BertTokenizer', 'transformers.BertForTokenClassification', 'transformers.BertConfig'),
 }
 # MODEL = 'roberta'
-MODEL = 'ernie'
+# MODEL = 'ernie'
 # MODEL = 'albert'
 # MODEL = 'bert'
+MODEL = 'reformer'
 
-epochs = 10
+epochs = 100
 batch_size = 32
 # batch_size = 64
 lr = 1e-5  # 学习率
 patience = 40  # early stop 不变好 就停止
 max_grad_norm = 10.0  # 梯度修剪
 # target_file = 'models/yewuliucheng/best.pth.tar'  # 模型存储路径
-# dir_name = 'zhishileixing'
-# dir_name = 'yewuliucheng'
 dir_name = 'xinwen'
+# dir_name = 'jigouduixiang'
 problem_type = 'single_label_classification'  # 单分类
 # problem_type = 'multi_label_classification'  # 多分类 损失函数不同 训练数据label需要是列表
 target_file = f'models/{dir_name}/{MODEL}_best.pth.tar'  # 模型存储路径

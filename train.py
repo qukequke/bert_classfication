@@ -134,7 +134,9 @@ def main():
                         "epochs_count": epochs_count,
                         "train_losses": train_losses,
                         "valid_losses": valid_losses},
-                       os.path.join(target_dir, "best.pth.tar"))
+                       target_file,
+                       # os.path.join(target_dir, "best.pth.tar")
+                       )
 
         train_acc_list.append(train_epoch_accuracy)
         dev_acc_list.append(epoch_accuracy)

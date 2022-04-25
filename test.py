@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import pandas as pd
 import torch
+from sklearn.metrics import confusion_matrix
 from sys import platform
 from torch.utils.data import DataLoader
 from transformers import RobertaTokenizer, BertTokenizer
@@ -37,7 +38,7 @@ def main():
         df['ret'] = df['pred'] == (df[csv_rows[-1]].apply(lambda x:eval(x)))
     else:
         df['ret'] = df['pred'] == df[csv_rows[-1]]
-    print(df['ret'].value_counts())
+    print(confusion_matrix(df[csv_rows[-1]].tolist(), df['pred'].tolist()))
     df.to_csv(test_pred_out, index=False, encoding='utf-8')
 
 if __name__ == "__main__":

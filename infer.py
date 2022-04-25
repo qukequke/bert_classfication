@@ -19,15 +19,17 @@ from torch.utils.data import Dataset
 import pandas as pd
 import torch
 
+# dir_name = 'jigouduixiang'
 dir_name = 'xinwen'
-target_file = f'models/{dir_name}/best.pth.tar'  # 模型存储路径
+model= 'bert'
+target_file = f'models/{dir_name}/{model}_best.pth.tar'  # 模型存储路径
 label_file = f'data/{dir_name}/class.txt'
 bert_path_or_name = 'bert-base-chinese'  # 使用模型
 batch_size = 32
 csv_rows = ['text', 'label']
 max_seq_len = 103
 # num_labels = 10
-num_labels = 10
+num_labels = 8
 # problem_type = 'multi_label_classification'
 problem_type = 'single_label_classification'  # 单分类
 
