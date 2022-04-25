@@ -41,6 +41,7 @@ model_dict = {  # 这里可以添加更多模型
         "junnyu/roformer_chinese_base",  # 使用模型参数
     )
 
+
     # 'bert_token_classify': ('transformers.BertTokenizer', 'transformers.BertForTokenClassification', 'transformers.BertConfig'),
 }
 # MODEL = 'roberta'
