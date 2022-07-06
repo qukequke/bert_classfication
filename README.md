@@ -103,5 +103,11 @@ python infer.py
 python test.py  # 会生成data/xinwen/test_pred_out
 ```
 
-# 参考链接
+## 参考链接
 https://github.com/649453932/Bert-Chinese-Text-Classification-Pytorch
+
+## 码云地址
+https://gitee.com/qukequke/bert-text-classification
+
+## github地址
+https://github.com/qukequke/bert_classfication/
