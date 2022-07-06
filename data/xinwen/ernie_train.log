@@ -1,0 +1,528 @@
+num_labels 是10
+====================  Preparing for training  ====================
+	* Loading training data...
+数据集个数为180000
+各个分类标签个数
+输入例子
+中华女子学院：本科层次仅1专业招男生
+input_ids
+tensor([  1,  12, 403, 291,  85,  18, 245,  74,  89, 147, 522, 218, 674, 208,
+        206,  26, 931, 654,  21,   2,   0,   0,   0,   0,   0,   0,   0,   0,
+          0,   0,   0,   0,   0,   0,   0])
+token_type_ids
+tensor([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+attention_mask
+tensor([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+labels
+tensor(3)
+实际序列转换后的长度为35, 设置最长为150
+	* Loading validation data...
+数据集个数为10000
+输入例子
+体验2D巅峰 倚天屠龙记十大创新概览
+input_ids
+tensor([   1,   82,  412, 4570, 2702, 1062, 3032,  125, 2505,  550,  374,  167,
+          19,  272,  102, 1125, 1272,    2,    0,    0,    0,    0,    0,    0,
+           0,    0,    0,    0,    0])
+token_type_ids
+tensor([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0])
+attention_mask
+tensor([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0])
+labels
+tensor(8)
+实际序列转换后的长度为29, 设置最长为150
+	* Building model...
+正在对验证集进行测试
+               precision    recall  f1-score   support
+
+      finance       0.04      0.14      0.07      1000
+       realty       0.00      0.00      0.00      1000
+       stocks       0.00      0.00      0.00      1000
+    education       0.00      0.00      0.00      1000
+      science       0.00      0.00      0.00      1000
+      society       0.00      0.00      0.00      1000
+     politics       0.10      0.69      0.18      1000
+       sports       0.00      0.00      0.00      1000
+         game       0.00      0.00      0.00      1000
+entertainment       0.00      0.00      0.00      1000
+
+     accuracy                           0.08     10000
+    macro avg       0.01      0.08      0.02     10000
+ weighted avg       0.01      0.08      0.02     10000
+
+	* Validation loss before training: 3.2987, accuracy: 8.3000%
+
+ ==================== Training model on device: cuda ====================
+* Training epoch 1:
+-> Training time: 541.5111s, loss = 0.3294, accuracy: 89.6072%
+* Validation for epoch 1:
+正在对验证集进行测试
+               precision    recall  f1-score   support
+
+      finance       0.90      0.93      0.91      1000
+       realty       0.93      0.94      0.93      1000
+       stocks       0.90      0.85      0.87      1000
+    education       0.98      0.96      0.97      1000
+      science       0.89      0.88      0.89      1000
+      society       0.93      0.94      0.94      1000
+     politics       0.93      0.94      0.93      1000
+       sports       0.99      0.97      0.98      1000
+         game       0.95      0.93      0.94      1000
+entertainment       0.92      0.97      0.95      1000
+
+     accuracy                           0.93     10000
+    macro avg       0.93      0.93      0.93     10000
+ weighted avg       0.93      0.93      0.93     10000
+
+-> Valid. time: 8.0819s, loss: 0.2142, accuracy: 93.0700% 
+
+save data
+* Training epoch 2:
+-> Training time: 537.8225s, loss = 0.1888, accuracy: 93.8200%
+* Validation for epoch 2:
+正在对验证集进行测试
+               precision    recall  f1-score   support
+
+      finance       0.92      0.92      0.92      1000
+       realty       0.95      0.93      0.94      1000
+       stocks       0.90      0.87      0.88      1000
+    education       0.97      0.98      0.97      1000
+      science       0.91      0.90      0.90      1000
+      society       0.95      0.92      0.93      1000
+     politics       0.90      0.95      0.93      1000
+       sports       0.97      0.99      0.98      1000
+         game       0.95      0.94      0.95      1000
+entertainment       0.95      0.95      0.95      1000
+
+     accuracy                           0.94     10000
+    macro avg       0.94      0.94      0.94     10000
+ weighted avg       0.94      0.94      0.94     10000
+
+-> Valid. time: 8.0766s, loss: 0.1973, accuracy: 93.6500% 
+
+save data
+* Training epoch 3:
+-> Training time: 537.9494s, loss = 0.1479, accuracy: 95.0600%
+* Validation for epoch 3:
+正在对验证集进行测试
+               precision    recall  f1-score   support
+
+      finance       0.92      0.92      0.92      1000
+       realty       0.96      0.93      0.95      1000
+       stocks       0.90      0.88      0.89      1000
+    education       0.98      0.96      0.97      1000
+      science       0.92      0.89      0.91      1000
+      society       0.91      0.96      0.94      1000
+     politics       0.92      0.95      0.94      1000
+       sports       0.98      0.99      0.99      1000
+         game       0.95      0.96      0.95      1000
+entertainment       0.96      0.97      0.96      1000
+
+     accuracy                           0.94     10000
+    macro avg       0.94      0.94      0.94     10000
+ weighted avg       0.94      0.94      0.94     10000
+
+-> Valid. time: 8.0499s, loss: 0.1819, accuracy: 94.1000% 
+
+save data
+* Training epoch 4:
+-> Training time: 537.9822s, loss = 0.1208, accuracy: 95.8683%
+* Validation for epoch 4:
+正在对验证集进行测试
+               precision    recall  f1-score   support
+
+      finance       0.92      0.94      0.93      1000
+       realty       0.96      0.94      0.95      1000
+       stocks       0.92      0.85      0.88      1000
+    education       0.98      0.97      0.97      1000
+      science       0.90      0.91      0.90      1000
+      society       0.94      0.94      0.94      1000
+     politics       0.91      0.96      0.93      1000
+       sports       0.98      0.99      0.99      1000
+         game       0.95      0.95      0.95      1000
+entertainment       0.97      0.96      0.97      1000
+
+     accuracy                           0.94     10000
+    macro avg       0.94      0.94      0.94     10000
+ weighted avg       0.94      0.94      0.94     10000
+
+-> Valid. time: 8.0797s, loss: 0.1880, accuracy: 94.1500% 
+
+save data
+* Training epoch 5:
+-> Training time: 538.2570s, loss = 0.0957, accuracy: 96.7439%
+* Validation for epoch 5:
+正在对验证集进行测试
+               precision    recall  f1-score   support
+
+      finance       0.93      0.92      0.92      1000
+       realty       0.96      0.93      0.95      1000
+       stocks       0.90      0.88      0.89      1000
+    education       0.97      0.97      0.97      1000
+      science       0.91      0.91      0.91      1000
+      society       0.91      0.96      0.94      1000
+     politics       0.92      0.96      0.94      1000
+       sports       0.99      0.99      0.99      1000
+         game       0.97      0.94      0.95      1000
+entertainment       0.97      0.96      0.97      1000
+
+     accuracy                           0.94     10000
+    macro avg       0.94      0.94      0.94     10000
+ weighted avg       0.94      0.94      0.94     10000
+
+-> Valid. time: 8.0630s, loss: 0.1999, accuracy: 94.1900% 
+
+save data
+* Training epoch 6:
+-> Training time: 538.3205s, loss = 0.0772, accuracy: 97.3472%
+* Validation for epoch 6:
+正在对验证集进行测试
+               precision    recall  f1-score   support
+
+      finance       0.93      0.92      0.92      1000
+       realty       0.95      0.94      0.95      1000
+       stocks       0.90      0.88      0.89      1000
+    education       0.97      0.97      0.97      1000
+      science       0.91      0.89      0.90      1000
+      society       0.92      0.95      0.93      1000
+     politics       0.92      0.95      0.94      1000
+       sports       0.99      0.99      0.99      1000
+         game       0.94      0.96      0.95      1000
+entertainment       0.97      0.96      0.97      1000
+
+     accuracy                           0.94     10000
+    macro avg       0.94      0.94      0.94     10000
+ weighted avg       0.94      0.94      0.94     10000
+
+-> Valid. time: 8.0653s, loss: 0.2059, accuracy: 94.1000% 
+
+* Training epoch 7:
+-> Training time: 538.0335s, loss = 0.0597, accuracy: 97.9306%
+* Validation for epoch 7:
+正在对验证集进行测试
+               precision    recall  f1-score   support
+
+      finance       0.94      0.92      0.93      1000
+       realty       0.96      0.94      0.95      1000
+       stocks       0.89      0.89      0.89      1000
+    education       0.96      0.97      0.97      1000
+      science       0.91      0.89      0.90      1000
+      society       0.93      0.94      0.94      1000
+     politics       0.93      0.95      0.94      1000
+       sports       0.99      0.99      0.99      1000
+         game       0.94      0.96      0.95      1000
+entertainment       0.96      0.97      0.97      1000
+
+     accuracy                           0.94     10000
+    macro avg       0.94      0.94      0.94     10000
+ weighted avg       0.94      0.94      0.94     10000
+
+-> Valid. time: 8.0767s, loss: 0.2262, accuracy: 94.2100% 
+
+save data
+* Training epoch 8:
+-> Training time: 538.2699s, loss = 0.0476, accuracy: 98.3839%
+* Validation for epoch 8:
+正在对验证集进行测试
+               precision    recall  f1-score   support
+
+      finance       0.92      0.92      0.92      1000
+       realty       0.95      0.94      0.95      1000
+       stocks       0.88      0.90      0.89      1000
+    education       0.97      0.97      0.97      1000
+      science       0.91      0.90      0.90      1000
+      society       0.94      0.94      0.94      1000
+     politics       0.93      0.95      0.94      1000
+       sports       0.99      0.98      0.99      1000
+         game       0.96      0.93      0.95      1000
+entertainment       0.96      0.97      0.96      1000
+
+     accuracy                           0.94     10000
+    macro avg       0.94      0.94      0.94     10000
+ weighted avg       0.94      0.94      0.94     10000
+
+-> Valid. time: 8.0743s, loss: 0.2376, accuracy: 94.1600% 
+
+* Training epoch 9:
+-> Training time: 538.2594s, loss = 0.0368, accuracy: 98.7211%
+* Validation for epoch 9:
+正在对验证集进行测试
+               precision    recall  f1-score   support
+
+      finance       0.94      0.91      0.92      1000
+       realty       0.95      0.94      0.95      1000
+       stocks       0.89      0.89      0.89      1000
+    education       0.97      0.97      0.97      1000
+      science       0.91      0.90      0.91      1000
+      society       0.93      0.95      0.94      1000
+     politics       0.92      0.96      0.94      1000
+       sports       0.99      0.99      0.99      1000
+         game       0.96      0.94      0.95      1000
+entertainment       0.97      0.97      0.97      1000
+
+     accuracy                           0.94     10000
+    macro avg       0.94      0.94      0.94     10000
+ weighted avg       0.94      0.94      0.94     10000
+
+-> Valid. time: 8.0804s, loss: 0.2511, accuracy: 94.2800% 
+
+save data
+* Training epoch 10:
+-> Training time: 538.2880s, loss = 0.0306, accuracy: 98.9372%
+* Validation for epoch 10:
+正在对验证集进行测试
+               precision    recall  f1-score   support
+
+      finance       0.93      0.92      0.92      1000
+       realty       0.96      0.94      0.95      1000
+       stocks       0.88      0.90      0.89      1000
+    education       0.98      0.96      0.97      1000
+      science       0.91      0.88      0.90      1000
+      society       0.94      0.94      0.94      1000
+     politics       0.89      0.97      0.93      1000
+       sports       0.98      0.99      0.99      1000
+         game       0.96      0.93      0.95      1000
+entertainment       0.96      0.96      0.96      1000
+
+     accuracy                           0.94     10000
+    macro avg       0.94      0.94      0.94     10000
+ weighted avg       0.94      0.94      0.94     10000
+
+-> Valid. time: 8.0833s, loss: 0.2794, accuracy: 93.8900% 
+
+* Training epoch 11:
+-> Training time: 538.3988s, loss = 0.0238, accuracy: 99.1772%
+* Validation for epoch 11:
+正在对验证集进行测试
+               precision    recall  f1-score   support
+
+      finance       0.93      0.92      0.93      1000
+       realty       0.95      0.95      0.95      1000
+       stocks       0.89      0.89      0.89      1000
+    education       0.98      0.96      0.97      1000
+      science       0.89      0.90      0.90      1000
+      society       0.93      0.95      0.94      1000
+     politics       0.92      0.95      0.93      1000
+       sports       0.99      0.99      0.99      1000
+         game       0.97      0.93      0.95      1000
+entertainment       0.97      0.96      0.97      1000
+
+     accuracy                           0.94     10000
+    macro avg       0.94      0.94      0.94     10000
+ weighted avg       0.94      0.94      0.94     10000
+
+-> Valid. time: 8.0793s, loss: 0.2758, accuracy: 94.0900% 
+
+* Training epoch 12:
+-> Training time: 538.4403s, loss = 0.0197, accuracy: 99.3200%
+* Validation for epoch 12:
+正在对验证集进行测试
+               precision    recall  f1-score   support
+
+      finance       0.93      0.91      0.92      1000
+       realty       0.95      0.94      0.95      1000
+       stocks       0.89      0.90      0.89      1000
+    education       0.98      0.96      0.97      1000
+      science       0.91      0.89      0.90      1000
+      society       0.93      0.96      0.95      1000
+     politics       0.93      0.95      0.94      1000
+       sports       0.99      0.99      0.99      1000
+         game       0.96      0.95      0.96      1000
+entertainment       0.96      0.97      0.96      1000
+
+     accuracy                           0.94     10000
+    macro avg       0.94      0.94      0.94     10000
+ weighted avg       0.94      0.94      0.94     10000
+
+-> Valid. time: 8.0617s, loss: 0.2844, accuracy: 94.3100% 
+
+save data
+* Training epoch 13:
+-> Training time: 538.3854s, loss = 0.0174, accuracy: 99.3911%
+* Validation for epoch 13:
+正在对验证集进行测试
+               precision    recall  f1-score   support
+
+      finance       0.94      0.92      0.93      1000
+       realty       0.95      0.94      0.95      1000
+       stocks       0.89      0.90      0.90      1000
+    education       0.97      0.97      0.97      1000
+      science       0.90      0.91      0.90      1000
+      society       0.94      0.94      0.94      1000
+     politics       0.92      0.96      0.94      1000
+       sports       0.99      0.99      0.99      1000
+         game       0.97      0.94      0.95      1000
+entertainment       0.96      0.97      0.97      1000
+
+     accuracy                           0.94     10000
+    macro avg       0.94      0.94      0.94     10000
+ weighted avg       0.94      0.94      0.94     10000
+
+-> Valid. time: 8.0769s, loss: 0.2960, accuracy: 94.2400% 
+
+* Training epoch 14:
+-> Training time: 538.4083s, loss = 0.0140, accuracy: 99.5283%
+* Validation for epoch 14:
+正在对验证集进行测试
+               precision    recall  f1-score   support
+
+      finance       0.94      0.92      0.93      1000
+       realty       0.95      0.95      0.95      1000
+       stocks       0.91      0.88      0.90      1000
+    education       0.98      0.96      0.97      1000
+      science       0.90      0.91      0.91      1000
+      society       0.94      0.95      0.95      1000
+     politics       0.91      0.96      0.94      1000
+       sports       1.00      0.98      0.99      1000
+         game       0.96      0.95      0.96      1000
+entertainment       0.96      0.98      0.97      1000
+
+     accuracy                           0.95     10000
+    macro avg       0.95      0.95      0.95     10000
+ weighted avg       0.95      0.95      0.95     10000
+
+-> Valid. time: 8.0741s, loss: 0.3020, accuracy: 94.5100% 
+
+save data
+* Training epoch 15:
+-> Training time: 538.5711s, loss = 0.0119, accuracy: 99.5983%
+* Validation for epoch 15:
+正在对验证集进行测试
+               precision    recall  f1-score   support
+
+      finance       0.94      0.93      0.93      1000
+       realty       0.96      0.94      0.95      1000
+       stocks       0.90      0.90      0.90      1000
+    education       0.98      0.96      0.97      1000
+      science       0.90      0.90      0.90      1000
+      society       0.94      0.94      0.94      1000
+     politics       0.89      0.97      0.93      1000
+       sports       0.99      0.99      0.99      1000
+         game       0.97      0.94      0.96      1000
+entertainment       0.97      0.97      0.97      1000
+
+     accuracy                           0.94     10000
+    macro avg       0.94      0.94      0.94     10000
+ weighted avg       0.94      0.94      0.94     10000
+
+-> Valid. time: 8.0662s, loss: 0.3242, accuracy: 94.3100% 
+
+* Training epoch 16:
+-> Training time: 538.2939s, loss = 0.0108, accuracy: 99.6300%
+* Validation for epoch 16:
+正在对验证集进行测试
+               precision    recall  f1-score   support
+
+      finance       0.94      0.92      0.93      1000
+       realty       0.96      0.94      0.95      1000
+       stocks       0.89      0.90      0.90      1000
+    education       0.97      0.96      0.97      1000
+      science       0.91      0.90      0.90      1000
+      society       0.95      0.94      0.94      1000
+     politics       0.91      0.96      0.93      1000
+       sports       0.99      0.98      0.99      1000
+         game       0.97      0.94      0.95      1000
+entertainment       0.95      0.98      0.96      1000
+
+     accuracy                           0.94     10000
+    macro avg       0.94      0.94      0.94     10000
+ weighted avg       0.94      0.94      0.94     10000
+
+-> Valid. time: 8.0752s, loss: 0.3310, accuracy: 94.2700% 
+
+* Training epoch 17:
+-> Training time: 538.5718s, loss = 0.0090, accuracy: 99.6972%
+* Validation for epoch 17:
+正在对验证集进行测试
+               precision    recall  f1-score   support
+
+      finance       0.94      0.92      0.93      1000
+       realty       0.96      0.94      0.95      1000
+       stocks       0.90      0.90      0.90      1000
+    education       0.98      0.96      0.97      1000
+      science       0.91      0.90      0.90      1000
+      society       0.93      0.96      0.94      1000
+     politics       0.92      0.95      0.94      1000
+       sports       0.99      0.99      0.99      1000
+         game       0.97      0.95      0.96      1000
+entertainment       0.96      0.97      0.97      1000
+
+     accuracy                           0.94     10000
+    macro avg       0.94      0.94      0.94     10000
+ weighted avg       0.94      0.94      0.94     10000
+
+-> Valid. time: 8.0860s, loss: 0.3366, accuracy: 94.4200% 
+
+* Training epoch 18:
+-> Training time: 538.5812s, loss = 0.0083, accuracy: 99.7144%
+* Validation for epoch 18:
+正在对验证集进行测试
+               precision    recall  f1-score   support
+
+      finance       0.93      0.92      0.93      1000
+       realty       0.96      0.94      0.95      1000
+       stocks       0.90      0.90      0.90      1000
+    education       0.97      0.97      0.97      1000
+      science       0.90      0.91      0.91      1000
+      society       0.94      0.94      0.94      1000
+     politics       0.91      0.96      0.94      1000
+       sports       0.99      0.98      0.99      1000
+         game       0.97      0.95      0.96      1000
+entertainment       0.96      0.97      0.97      1000
+
+     accuracy                           0.94     10000
+    macro avg       0.94      0.94      0.94     10000
+ weighted avg       0.94      0.94      0.94     10000
+
+-> Valid. time: 8.0699s, loss: 0.3360, accuracy: 94.4200% 
+
+* Training epoch 19:
+-> Training time: 538.7268s, loss = 0.0071, accuracy: 99.7478%
+* Validation for epoch 19:
+正在对验证集进行测试
+               precision    recall  f1-score   support
+
+      finance       0.93      0.92      0.93      1000
+       realty       0.96      0.94      0.95      1000
+       stocks       0.90      0.89      0.89      1000
+    education       0.97      0.96      0.97      1000
+      science       0.89      0.92      0.90      1000
+      society       0.94      0.95      0.94      1000
+     politics       0.93      0.95      0.94      1000
+       sports       0.99      0.99      0.99      1000
+         game       0.97      0.94      0.95      1000
+entertainment       0.96      0.97      0.97      1000
+
+     accuracy                           0.94     10000
+    macro avg       0.94      0.94      0.94     10000
+ weighted avg       0.94      0.94      0.94     10000
+
+-> Valid. time: 8.0867s, loss: 0.3434, accuracy: 94.3600% 
+
+* Training epoch 20:
+-> Training time: 538.4761s, loss = 0.0062, accuracy: 99.7900%
+* Validation for epoch 20:
+正在对验证集进行测试
+               precision    recall  f1-score   support
+
+      finance       0.94      0.92      0.93      1000
+       realty       0.95      0.95      0.95      1000
+       stocks       0.89      0.90      0.90      1000
+    education       0.97      0.96      0.97      1000
+      science       0.90      0.91      0.90      1000
+      society       0.94      0.95      0.95      1000
+     politics       0.92      0.95      0.94      1000
+       sports       0.99      0.99      0.99      1000
+         game       0.97      0.94      0.95      1000
+entertainment       0.96      0.97      0.97      1000
+
+     accuracy                           0.94     10000
+    macro avg       0.94      0.94      0.94     10000
+ weighted avg       0.94      0.94      0.94     10000
+
+-> Valid. time: 8.0724s, loss: 0.3463, accuracy: 94.4300% 
+

@@ -1,1 +1,11 @@
 data/jigouduixiang/
+data/gangwei/
+data/haodaifu/
+data/haodaifu2/
+data/yewuliucheng/
+data/zhishileixing/
+pipeline_infer.py
+data/blood_train.csv
+data/ann_dispose/
+data/senti_classify/
+./run2.sh
