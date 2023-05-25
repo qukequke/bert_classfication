@@ -28,7 +28,7 @@ def set_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--model', default='bert', type=str, required=False, help='使用什么模型')
     parser.add_argument('--problem_type', default='single_label_classification', type=str, required=False, help='单标签分类还是多标签分类')
-    parser.add_argument('--dir_name', default='yewuliucheng', type=str, required=False, help='训练集存放目录,里面包含train.csv test.csv dev.csv')
+    parser.add_argument('--dir_name', default='xinwen', type=str, required=False, help='训练集存放目录,里面包含train.csv test.csv dev.csv')
     parser.add_argument('--batch_size', default=16, type=int, required=False, help='训练的batch size')
     parser.add_argument('--max_seq_len', default=150, type=int, required=False, help='训练时，输入数据的最大长度')
     parser.add_argument('--text_col_name', default='text', type=str, required=False, help='train.csv文本列名字')
